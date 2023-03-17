@@ -47,3 +47,35 @@ str(runkeeper)
 runkeeper %>% filter(is.na((Average.Heart.Rate)))
 
 sum(is.na(runkeeper$Average.Heart.Rate))
+
+#As we can see from the previous line, the dataset has 214 NA-values in the Average.Heart.Rate column
+#We can remove them from the dataset as they are not relevant for our analysis and they are not a lot of them 
+
+#First we need to convert the column to date format
+runkeeper$Date <- as.Date(runkeeper$Date)  #convert Date column to Date format
+
+#Plotting the Average Heart Rate over time
+ggplot(runkeeper, aes(x=Date, y=Average.Heart.Rate)) + 
+    geom_point( size=2, alpha=0.5, color=c(unique(runkeeper$Type))) +
+    scale_color_manual(values = c("red", "blue", "green", "orange")) +
+    theme(axis.text.x = element_text(angle = 90, hjust = 1)) + 
+    ggtitle("Average Heart Rate over time")+
+    xlab("Date")+
+    ylab("Average Heart Rate")+ 
+    scale_x_date(date_breaks = "1 month", date_labels = "%b %Y")+ 
+    theme(plot.title = element_text(hjust = 0.5))+  
+    theme(plot.title = element_text(size = 20))+
+    theme(axis.title.x = element_text(size = 15))+
+    theme(axis.title.y = element_text(size = 15))+
+    theme(axis.text.x = element_text(size = 10))+
+    theme(axis.text.y = element_text(size = 10)) +  
+    theme(legend.title = element_text(size = 15))+
+    theme(legend.text = element_text(size = 15))+ 
+    theme(legend.position = "bottom")+ 
+    theme(legend.background = element_rect(fill = "white"))+
+    theme(legend.key = element_rect(fill = "white"))+
+    theme(legend.key.size = unit(1, "cm"))+
+    theme(legend.key.height = unit(1, "cm"))+
+    theme(legend.key.width = unit(1, "cm"))+
+    theme(legend.key.size = unit(1, "cm"))
+
